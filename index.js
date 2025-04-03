@@ -30,7 +30,7 @@ router.hooks({
         // Get request to retrieve the current weather data using the API key and providing a city name
         axios
           .get(
-            `https://api.openweathermap.org/data/2.5/weather?appid=${process.env.OPEN_WEATHER_MAP_API_KEY}&units=imperial&q=st%20louis`
+            `https://api.openweathermap.org/data/2.5/weather?appid=cbb00d50b46c41ac4d9bd75f3866c1c2&units=imperial&q=st%20louis`
           )
           .then((response) => {
             console.log("response.data", response.data);
