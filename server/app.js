@@ -3,6 +3,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import pizzas from "./controllers/pizzas.js";
+import customers from "./controllers/customers.js";
 
 // Load environment variables from .env file
 dotenv.config();
@@ -98,6 +99,7 @@ app.get("/weather/:city", (request, response) => {
 });
 
 app.use("/pizzas", pizzas);
+app.use("/customers", customers);
 
 // Tell the Express app to start listening
 // Let the humans know I am running and listening on 4040

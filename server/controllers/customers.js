@@ -1,14 +1,14 @@
 import { Router } from "express";
-import Pizza from "../models/Pizza.js";
+import Customer from "../models/Customer.js";
 
 const router = Router();
 
-// Create pizza route
+// Create customer route
 router.post("/", async (request, response) => {
   try {
-    const newPizza = new Pizza(request.body);
+    const newCustomer = new Customer(request.body);
 
-    const data = await newPizza.save();
+    const data = await newCustomer.save();
 
     response.json(data);
   } catch (error) {
@@ -22,14 +22,14 @@ router.post("/", async (request, response) => {
   }
 });
 
-// Get all pizzas route
+// Get all customers route
 router.get("/", async (request, response) => {
   try {
     // Store the query params into a JavaScript Object
     const query = request.query; // Defaults to an empty object {}
     console.log("query", request.query);
 
-    const data = await Pizza.find(query);
+    const data = await Customer.find(query);
 
     response.json(data);
   } catch (error) {
@@ -40,10 +40,10 @@ router.get("/", async (request, response) => {
   }
 });
 
-// Get a single pizza by ID
+// Get a single customer by ID
 router.get("/:id", async (request, response) => {
   try {
-    const data = await Pizza.findById(request.params.id);
+    const data = await Customer.findById(request.params.id);
 
     response.json(data);
   } catch (error) {
@@ -54,48 +54,15 @@ router.get("/:id", async (request, response) => {
   }
 });
 
-// Delete a pizza by ID
+// Delete a customer by ID
 router.delete("/:id", async (request, response) => {
   try {
-    const data = await Pizza.findByIdAndDelete(request.params.id);
+    const data = await Customer.findByIdAndDelete(request.params.id);
 
     response.json(data);
   } catch (error) {
     // Output error to the console incase it fails to send in response
     console.log(error);
-
-    return response.status(500).json(error.errors);
-  }
-});
-
-// Update a single pizza by ID
-router.put("/:id", async (request, response) => {
-  try {
-    const body = request.body;
-
-    const data = await Pizza.findByIdAndUpdate(
-      request.params.id,
-      {
-        $set: {
-          crust: body.crust,
-          cheese: body.cheese,
-          sauce: body.sauce,
-          toppings: body.toppings,
-        },
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-
-    response.json(data);
-  } catch (error) {
-    // Output error to the console incase it fails to send in response
-    console.log(error);
-
-    if ("name" in error && error.name === "ValidationError")
-      return response.status(400).json(error.errors);
 
     return response.status(500).json(error.errors);
   }
